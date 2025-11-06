@@ -1,7 +1,7 @@
 require('dotenv').config();
 var express = require('express');
-var app = express();
 var cors = require('cors');
+var app = express();
 
 app.use(cors({ optionsSuccessStatus: 200 }));
 app.use(express.static('public'));
@@ -16,7 +16,7 @@ app.get('/api/hello', function (req, res) {
 
 app.get('/api/whoami', function (req, res) {
   res.json({
-    ipaddress: req.ip,
+    ipaddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
     language: req.headers['accept-language'],
     software: req.headers['user-agent']
   });
